@@ -48,6 +48,8 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to EM ERP Application."});
 });
  
+/** Module wise Routing configuration is here*********** */
+require('./app/orders/_routes/_order_routes')(app);
 
 // set port, listen for requests
 const PORT = process.env.SERVER_PORT || 8000;
