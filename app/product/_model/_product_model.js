@@ -1,0 +1,42 @@
+module.exports = (sequelize, Sequelize) => {
+  const productModel = sequelize.define(
+    "product_details",
+    {
+      product_id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      // Basic detail start
+      product_name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      product_size: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: "--",
+      },
+      sku_code: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      quantity: {
+        type: Sequelize.INTEGER,
+        allowNull: null,
+      },
+      in_stock: {
+        type: Sequelize.BOOLEAN(true, false),
+        defaultValue: true,
+      },
+      isDeleted: {
+        type: Sequelize.BOOLEAN(true, false),
+        defaultValue: false,
+      },
+    },
+    {
+      freezeTableName: true,
+    }
+  );
+  return productModel;
+};
