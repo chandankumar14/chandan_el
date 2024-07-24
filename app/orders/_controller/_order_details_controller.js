@@ -1,4 +1,4 @@
-const db = require("../../../models/index");
+const db = require("../../../model/index");
 const order_details_model = db.order_details;
 exports.getOrderDetails = async (req, res) => {
   try {
