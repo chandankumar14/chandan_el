@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
   const orderModels = sequelize.define(
-    "order_details",
+    "order",
     {
       order_id: {
         type: Sequelize.INTEGER,
@@ -11,22 +11,22 @@ module.exports = (sequelize, Sequelize) => {
       user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references:{
-            model: 'user_details',
-            key: 'user_id',
-        }
+        references: {
+          model: "user_details",
+          key: "user_id",
+        },
       },
       payment_id: {
         type: Sequelize.STRING,
         allowNull: true,
         defaultValue: "--",
       },
-      product_id:{
-        type:Sequelize.STRING,
-        allowNull:false
+      product_id: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       order_status: {
-        type: Sequelize.ENUM("COMPLETE", "INCOMPLETE","INPROGRESS"),
+        type: Sequelize.ENUM("COMPLETE", "INCOMPLETE", "INPROGRESS"),
         defaultValue: "INPROGRESS",
       },
       // Personal details start

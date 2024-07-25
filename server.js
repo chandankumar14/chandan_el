@@ -59,5 +59,7 @@ require("./app/product/_router/_product_routes")(app);
 // set port, listen for requests
 const PORT = process.env.SERVER_PORT || 8000;
 app.listen(PORT, () => {
-  console.log(` \u001b[1;32m Server is running on port no http://localhost:${process.env.SERVER_PORT}. \u001b[0m`);
+  console.log(
+    ` \u001b[1;32m Server is running on port no http://localhost:${process.env.SERVER_PORT}. \u001b[0m`
+  );
 });

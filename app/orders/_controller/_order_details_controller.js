@@ -1,26 +1,78 @@
 const db = require("../../../model/index");
-const order_details_model = db.order_details;
-exports.getOrderDetails = async (req, res) => {
-  try {
-    const { user_id } = req.body;
-    const orderDetailsList = await order_details_model.findOne({
-      where: {
-        user_id: user_id,
-        isDeleted: false,
-      },
-    });
+const paymentModel = db.payment_details;
 
-    if (orderDetailsList) {
-      return res.status(403).send({
-        code: 403,
-        orderDetailsList: orderDetailsList,
-        message: "Order Details Fetch Successfully..",
+exports.orderList = async (req, res) => {
+  try {
+    const query = `
+        SELECT 
+           OD.order_id,
+           OD.user_id,
+           OD.payment_id,
+           UD.first_name,
+           UD.middle_name,
+           UD.last_name,
+           UD.contact_number
+           
+        FROM order_details OD
+        LEFT JOIN user_details ES UD OD.user_id = UD.user_id 
+        WHERE OD.order_status = :order_status`;
+    const orderList = await db.sequelize.query(query, {
+      replacements: { order_status: "COMPLETE" },
+      type: db.sequelize.QueryTypes.SELECT,
+    });
+    if (orderList && orderList != undefined) {
+      return res.status(200).send({
+        code: 200,
+        message: "Fetch All orderList Successfully",
+        data: orderList,
       });
     }
   } catch (error) {
-    console.error("Error:", error);
     return res
       .status(500)
-      .send({ code: 500, message: "Internal Server Error" });
+      .send({ code: 500, message: error.message || "Server Error" });
+  }
+};
+
+exports.orderDetails = async (req, res) => {
+  try {
+    const { order_id } = req.body;
+    const query = `
+        SELECT 
+           OD.order_id,
+           OD.user_id,
+           PD.product_id,
+           PD.product_name,
+           PD.product_image,
+           
+        FROM order_details OD
+        LEFT JOIN product_details PD OD.product_id = PD.product_id 
+        WHERE OD.order_id = :order_id`;
+    const orderDetails = await db.sequelize.query(query, {
+      replacements: { order_id: order_id },
+      type: db.sequelize.QueryTypes.SELECT,
+    });
+
+    if (orderDetails && orderDetails != undefined) {
+      try {
+        const payment_details = await paymentModel.findOne({
+          where: { order_id: order_id },
+        });
+        return res.status(200).send({
+          code: 200,
+          message: "Fetch All orderDetails Successfully",
+          data: orderDetails,
+          payment_details: payment_details,
+        });
+      } catch (error) {
+        return res
+          .status(500)
+          .send({ code: 500, message: error.message || "Server Error" });
+      }
+    }
+  } catch (error) {
+    return res
+      .status(500)
+      .send({ code: 500, message: error.message || "Server Error" });
   }
 };

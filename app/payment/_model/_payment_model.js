@@ -16,6 +16,7 @@ module.exports = (sequelize, Sequelize) => {
       order_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        unique: true
       },
 
       payment_mode: {

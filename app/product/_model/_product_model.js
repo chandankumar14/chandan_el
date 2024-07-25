@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
   const productModel = sequelize.define(
-    "product_details",
+    "product",
     {
       product_id: {
         type: Sequelize.INTEGER,
@@ -28,6 +28,18 @@ module.exports = (sequelize, Sequelize) => {
       in_stock: {
         type: Sequelize.BOOLEAN(true, false),
         defaultValue: true,
+      },
+      product_image: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      product_description: {
+        type: Sequelize.TEXT,
+        allowNull: false,
+      },
+      category_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       isDeleted: {
         type: Sequelize.BOOLEAN(true, false),
