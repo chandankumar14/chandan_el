@@ -35,14 +35,14 @@ app.use(express.urlencoded({ extended: true }));
 const db = require("./model");
 // const Role = db.role;
 
-db.sequelize
-  .sync({ alter: false })
-  .then(() => {
-    console.log("Synced db success...");
-  })
-  .catch((err) => {
-    console.log("Failed to sync db...", err.message);
-  });
+// db.sequelize
+//   .sync({ alter: false })
+//   .then(() => {
+//     console.log("Synced db success...");
+//   })
+//   .catch((err) => {
+//     console.log("Failed to sync db...", err.message);
+//   });
 
 // simple routes
 app.get("/", (req, res) => {
@@ -59,5 +59,5 @@ require("./app/product/_router/_product_routes")(app);
 // set port, listen for requests
 const PORT = process.env.SERVER_PORT || 8000;
 app.listen(PORT, () => {
-  console.log(` \u001b[1;32m Server is running on port ${PORT}. \u001b[0m`);
+  console.log(` \u001b[1;32m Server is running on port no http://localhost:${process.env.SERVER_PORT}. \u001b[0m`);
 });

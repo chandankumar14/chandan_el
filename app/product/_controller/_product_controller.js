@@ -82,3 +82,22 @@ exports.deleteProduct = async (req, res) => {
       .send({ code: 500, message: error.message || "Server Error" });
   }
 };
+
+exports.productList = async (req, res) => {
+  try {
+    const productList = await productModel.findAll({
+      order: [["createdAt", "DESC"]],
+    });
+    if (productList && productList != undefined) {
+      return res.status(200).send({
+        code: 200,
+        message: "Fetch All productList Successfully",
+        data: productList,
+      });
+    }
+  } catch (error) {
+    return res
+      .status(500)
+      .send({ code: 500, message: error.message || "Server Error" });
+  }
+};
