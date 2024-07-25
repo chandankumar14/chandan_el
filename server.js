@@ -35,14 +35,14 @@ app.use(express.urlencoded({ extended: true }));
 const db = require("./model");
 // const Role = db.role;
 
-// db.sequelize
-//   .sync({ alter: false })
-//   .then(() => {
-//     console.log("Synced db success...");
-//   })
-//   .catch((err) => {
-//     console.log("Failed to sync db...", err.message);
-//   });
+db.sequelize
+  .sync({ alter: false })
+  .then(() => {
+    console.log("Synced db success...");
+  })
+  .catch((err) => {
+    console.log("Failed to sync db...", err.message);
+  });
 
 // simple routes
 app.get("/", (req, res) => {

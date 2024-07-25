@@ -25,6 +25,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
         allowNull: null,
       },
+      price: {
+        type: Sequelize.FLOAT,
+        allowNull: false,
+      },
       in_stock: {
         type: Sequelize.BOOLEAN(true, false),
         defaultValue: true,
