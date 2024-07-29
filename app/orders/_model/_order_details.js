@@ -12,9 +12,13 @@ module.exports = (sequelize, Sequelize) => {
         unique: false,
       },
       product_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         unique: false,
       },
+      user_id:{
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      }
     },
     {
       freezeTableName: true,

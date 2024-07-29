@@ -12,7 +12,12 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false,
       },
       category_banner1: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      category_layout: {
+        type: Sequelize.STRING,
+        defaultValue: "grid",
       },
     },
     {

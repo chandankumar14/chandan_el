@@ -1,5 +1,6 @@
 const db = require("../../../model/index");
 const productModel = db.product_details;
+const productCategories = db.product_categories;
 
 exports.createProduct = async (req, res) => {
   try {
@@ -93,6 +94,28 @@ exports.productList = async (req, res) => {
         code: 200,
         message: "Fetch All productList Successfully",
         data: productList,
+      });
+    }
+  } catch (error) {
+    return res
+      .status(500)
+      .send({ code: 500, message: error.message || "Server Error" });
+  }
+};
+
+exports.createProductCategory = async (req, res) => {
+  try {
+    const { category_name, category_banner1, category_layout } = req.body;
+    const CategorySave = productCategories.create({
+      category_name: category_name,
+      category_banner1: category_banner1,
+      category_layout: category_layout,
+    });
+    if (CategorySave) {
+      return res.status(200).send({
+        code: 200,
+        Category: CategorySave,
+        message: "category is Created Succssesfully",
       });
     }
   } catch (error) {

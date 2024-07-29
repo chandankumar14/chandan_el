@@ -11,10 +11,6 @@ module.exports = (sequelize, Sequelize) => {
       user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
-          model: "user_details",
-          key: "user_id",
-        },
       },
       payment_id: {
         type: Sequelize.STRING,
@@ -25,13 +21,22 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      product_quantity: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       order_status: {
-        type: Sequelize.ENUM("COMPLETE", "INCOMPLETE", "INPROGRESS"),
-        defaultValue: "INPROGRESS",
+        type: Sequelize.ENUM("COMPLETE", "INCOMPLETE", "ACTIVE"),
+        defaultValue: "ACTIVE",
+      },
+      order_amount: {
+        type: Sequelize.FLOAT,
+        allowNull: false,
       },
       // Personal details start
       delivery_address: {
         type: Sequelize.TEXT,
+        allowNull: false,
       },
       isDeleted: {
         type: Sequelize.BOOLEAN(true, false),
