@@ -1,6 +1,8 @@
 const db = require("../../../model/index");
 const paymentModel = db.payment_details;
 const orderModel = db.order;
+const cartModel = db.cart;
+const productModel = db.product;
 
 exports.orderList = async (req, res) => {
   try {
@@ -182,4 +184,44 @@ exports.placeOrder = async (req, res) => {
       .status(500)
       .send({ code: 500, message: error.message || "Server Error" });
   }
+};
+
+exports.addToCart = async (req, res) => {
+  try {
+    const { product_id, user_id } = req.body;
+    const cartProductList = await cartModel.create({
+      product_id: product_id,
+      user_id: user_id,
+    });
+    if (cartProductList && cartProductList != undefined) {
+      return res.status(200).send({
+        code: 200,
+        ProductDetails: cartProductList,
+        message: "Your product is added Succssesfully",
+      });
+    }
+  } catch (error) {
+    return res
+      .status(500)
+      .send({ code: 500, message: error.message || "Server Error" });
+  }
+};
+
+exports.getCartProductList = async (req, res) => {
+  try {
+    const { user_id } = req.body;
+    const cartProduct = await cartModel.findAll({
+      where: { user_id: user_id },
+    });
+
+    if (cartProduct && cartProduct != undefined) {
+      try {
+        const productList = await productModel.findAll({
+          where: { product_id: [] },
+        });
+      } catch (error) {
+        
+      }
+    }
+  } catch (error) {}
 };

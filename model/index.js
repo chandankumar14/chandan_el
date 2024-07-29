@@ -23,6 +23,7 @@ db.user_module = require("../app/customer/_model/_user_model")(
   Sequelize
 );
 db.order = require("../app/orders/_model/_order_model")(sequelize, Sequelize);
+db.cart = require("../app/orders/_model/_cart_model")(sequelize, Sequelize);
 db.order_details = require("../app/orders/_model/_order_details")(
   sequelize,
   Sequelize
