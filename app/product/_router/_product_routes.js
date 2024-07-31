@@ -11,7 +11,11 @@ module.exports = function (app) {
   app.put("/api/v1/update_product", productController.updateProduct);
   app.get("/api/v1/product_list", productController.productList);
   app.delete("/api/v1/delete_product", productController.deleteProduct);
-  app.post("/create-category", productController.createProductCategory);
+  app.post(
+    "/api/v1/create-category",
+    upload.single("category_banner"),
+    productController.createProductCategory
+  );
   /*** product variant routes*********** */
   app.post(
     "/api/v1/create-product-variant",

@@ -4,19 +4,32 @@ const productCategories = db.product_categories;
 
 exports.createProduct = async (req, res) => {
   try {
-    const { product_name, product_size, sku_code, quantity, in_stock } =
-      req.body;
+    const {
+      product_name,
+      price,
+      product_description,
+      category_id,
+      product_size,
+      sku_code,
+      quantity,
+      in_stock,
+    } = req.body;
     const saveProductDetails = await productModel.create({
       product_name: product_name,
       product_size: product_size,
       sku_code: sku_code,
       quantity: quantity,
+      price: price,
       in_stock: in_stock,
+      product_image: req?.file?.filename
+        ? req.file.filename
+        : req.body.product_image,
+      product_description: product_description,
+      category_id: category_id,
     });
     if (saveProductDetails) {
       return res.status(200).send({
         code: 200,
-        ProductDetails: saveProductDetails,
         message: "product is Created Succssesfully",
       });
     }
@@ -105,16 +118,17 @@ exports.productList = async (req, res) => {
 
 exports.createProductCategory = async (req, res) => {
   try {
-    const { category_name, category_banner1, category_layout } = req.body;
+    const { category_name, category_layout } = req.body;
     const CategorySave = productCategories.create({
       category_name: category_name,
-      category_banner1: category_banner1,
+      category_banner1: req?.file?.filename
+        ? req.file.filename
+        : req.body.category_banner1,
       category_layout: category_layout,
     });
     if (CategorySave) {
       return res.status(200).send({
         code: 200,
-        Category: CategorySave,
         message: "category is Created Succssesfully",
       });
     }

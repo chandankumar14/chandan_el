@@ -10,6 +10,8 @@ exports.createProductVariant = async (req, res) => {
       quantity,
       in_stock,
       product_id,
+      category_id,
+      price
     } = req.body;
     const product_image = req?.file?.filename ? req.file.filename : req.body.product_image;
     const saveProductVariantDetails = await productVariantModel.create({
@@ -19,13 +21,14 @@ exports.createProductVariant = async (req, res) => {
       quantity: quantity,
       in_stock: in_stock,
       product_id: product_id,
+      category_id:category_id,
+      price:price,
       product_image:product_image
     });
     if (saveProductVariantDetails) {
       return res.status(200).send({
         code: 200,
-        ProductDetails: saveProductVariantDetails,
-        message: "product is Created Succssesfully",
+        message: "product VARIANT  is Created Succssesfully",
       });
     }
   } catch (error) {

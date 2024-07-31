@@ -17,7 +17,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       category_layout: {
         type: Sequelize.STRING,
-        defaultValue: "grid",
+        allowNull: false,
       },
     },
     {
