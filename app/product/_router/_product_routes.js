@@ -16,6 +16,7 @@ module.exports = function (app) {
     upload.single("category_banner"),
     productController.createProductCategory
   );
+  app.get("/api/v1/gridLayoutproductList",productController.gridLayoutproductList)
   /*** product variant routes*********** */
   app.post(
     "/api/v1/create-product-variant",

@@ -138,3 +138,56 @@ exports.createProductCategory = async (req, res) => {
       .send({ code: 500, message: error.message || "Server Error" });
   }
 };
+
+exports.gridLayoutproductList = async (req, res) => {
+  try {
+    const finalResult = [];
+    const categoryList = await productCategories.findAll({
+      attributes: [
+        "category_id",
+        "category_name",
+        "category_layout",
+        "category_banner1",
+      ],
+    });
+
+    if (categoryList && categoryList.length > 0) {
+      categoryList.map(async (item) => {
+        let productList = await productModel.findAll({
+          attributes: [
+            "product_id",
+            "product_name",
+            "product_image",
+            "category_id",
+            "product_description",
+          ],
+          where: {
+            category_id: item?.category_id,
+            in_stock: true,
+            isDeleted: false,
+          },
+          limit: 5,
+        });
+        if (productList && productList.length > 0) {
+          let payload = {
+            category_id: item?.category_id,
+            category_name: item?.category_name,
+            category_layout: item?.category_layout,
+            category_banner1: item?.category_banner1,
+            productList: productList,
+          };
+          finalResult.push(payload);
+        }
+      });
+      return res.status(200).send({
+        code: 200,
+        finalResult: finalResult,
+        message: "category is Created Succssesfully",
+      });
+    }
+  } catch (error) {
+    return res
+      .status(500)
+      .send({ code: 500, message: error.message || "Server Error" });
+  }
+};
